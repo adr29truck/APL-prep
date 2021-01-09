@@ -6,6 +6,7 @@ import {DayButton} from './DayButton';
 export const DayButtonList = (props) => {
   // props
   // day - date ex 2020-01-01
+  // submitted - boolean
 
   const [buttons, setButtons] = useState([]);
   const [times, setTimes] = useState([]);
@@ -42,7 +43,7 @@ export const DayButtonList = (props) => {
       console.log('Fetched Times');
     }
     fetchTimes();
-  }, [props.day]);
+  }, [props.day, props.submitted]);
 
   // const generateButtons = () => {
   //   for (let [i, x] of times.entries()) {

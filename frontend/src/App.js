@@ -10,12 +10,14 @@ import API from './helpers/API';
 export function App() {
   const [times, setTimes] = useState([]);
   const [activitiy, setActivity] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
 
-  function onClick(_) {
+  async function onClick(_) {
     const filteredTimes = times.filter(x => x.isChecked === true);
     for (const t of filteredTimes) {
-      API.post('times/' + t.name + '/1', {id: t.id, activity_id: activitiy});
+      await API.post('times/' + t.name + '/1', {id: t.id, activity_id: activitiy});
     }
+    setSubmitted(q => !q);
   }
 
   const [day, setDay] = useState(new Date())
@@ -36,7 +38,7 @@ export function App() {
   <div>
     <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
     <Typography variant="h2" component="h2" gutterBottom className="text-center">{day.toISOString().split('T')[0]}</Typography>
-    <DayButtonList day={day.toISOString().split('T')[0]} onTimes={setTimes}/>
+    <DayButtonList day={day.toISOString().split('T')[0]} onTimes={setTimes} submitted={submitted} />
     <ActivityDropDown onActivity={setActivity} onClickButton={onClick} />
   </div>
   )
