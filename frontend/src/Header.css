@@ -1,0 +1,7 @@
+header {
+  display: flex;
+  justify-content: space-evenly;
+}
+header h3 {
+  margin: 4px 0;
+}
