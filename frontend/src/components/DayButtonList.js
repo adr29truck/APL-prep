@@ -37,9 +37,9 @@ export const DayButtonList = (props) => {
         x.isChecked = false;
         if (x.color != null) {  x.style ={ color: x.color} };
       }
+      setButtons([]);
       setTimes(temp);
       console.log('Fetched Times');
-      // generateButtons()
     }
     fetchTimes();
   }, [props.day]);
