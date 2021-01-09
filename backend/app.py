@@ -5,7 +5,7 @@ from modules.time_ import TimeBase as Time
 from modules.activity import Activity
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import datetime
+from datetime import datetime
 import sqlalchemy as db
 
 engine     = db.create_engine('sqlite:///data.sqlite', echo=True, connect_args={'check_same_thread': False})
@@ -40,7 +40,7 @@ def times_user_date(time, user_id):
     temp = s.query(Time).filter(Time.name.like(f'%{time}%'),Time.user_id == user_id).all()
     count = 0
     while len(temp) == 0:
-      generate_times_in_db()
+      generate_times_in_db(time)
       temp = s.query(Time).filter(Time.name.like(f'%{time}%'),Time.user_id == user_id).all()
       count += 1
       if count > 3:
@@ -80,8 +80,10 @@ def  activity():
 
 
 
-def generate_times_in_db():
-  first_part = datetime.date.today().strftime('%Y-%m-%d')
+def generate_times_in_db(date):
+  """ Takes a date string and generates Time objects from it that it saves to the the db """
+  date_time_obj = datetime.strptime(date, '%Y-%m-%d') # This is done to ensure a valid date is passed
+  first_part = date_time_obj.strftime('%Y-%m-%d')
   i = 0
   while i < 24:
     new_time = Time(name=(first_part + 'T' + str(i)), user_id=1)
