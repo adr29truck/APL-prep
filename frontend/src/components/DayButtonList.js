@@ -45,19 +45,12 @@ export const DayButtonList = (props) => {
     fetchTimes();
   }, [props.day, props.submitted]);
 
-  // const generateButtons = () => {
-  //   for (let [i, x] of times.entries()) {
-  //     setButtons(q => [...q, <DayButton key={i} object={x} onClickCheckBox={() => onClickCheckBox(x)} />]);
-  //   };
-  //   console.log('Generated Buttons')
-  // }
   useEffect(() => {
     console.log('Re rendered Times', buttons);
     console.log(times);
     if (buttons.length !== 0) {
       for (let [i, x] of times.entries()) {
         setButtons(q => [...q.map(z => { return z.key === x.key ? <DayButton key={'box_'+ i} object={x} onClickCheckBox={() => onClickCheckBox(x)} /> : z} )]);
-        // [...q, <DayButton key={i} object={x} onClickCheckBox={() => onClickCheckBox(x)} />]);
       };
       console.log(buttons, 'buttons')
     }
