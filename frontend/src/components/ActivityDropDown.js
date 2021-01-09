@@ -44,6 +44,7 @@ export const ActivityDropDown = (props) => {
   <div>
     <Select
       style={{color: "#fff"}}
+      label="Activity Selector"
       native
       onChange={onChange}
       inputProps={{
