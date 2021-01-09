@@ -46,6 +46,8 @@ def populate_tables():
   session.add(new_activity)
   new_activity = Activity(name="Entertainment", user_id=0, color="peachpuff")
   session.add(new_activity)
+  new_activity = Activity(name="Internet", user_id=0, color="silver")
+  session.add(new_activity)
   new_activity = Activity(name="Downtime", user_id=0, color="grey")
   session.add(new_activity)
   new_activity = Activity(name="Socialization", user_id=0, color="yellow")
