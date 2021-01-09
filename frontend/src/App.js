@@ -22,6 +22,16 @@ export function App() {
 
   const [day, setDay] = useState(new Date())
 
+  function getDayAsString() {
+    let temp = day;
+    if (temp.getTimezoneOffset() < 0) {
+      temp = new Date(temp.valueOf() + (60_000 * (-temp.getTimezoneOffset())));
+    } else {
+      temp = new Date(temp.valueOf() - (60_000 * (temp.getTimezoneOffset())));
+    }
+    return temp.toISOString().split('T')[0];
+  }
+
   function onClickLeftArrow() {
     setDay(q => new Date(q.valueOf() - 86_400_000))
   }
@@ -37,8 +47,8 @@ export function App() {
   return (
   <div>
     <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
-    <Typography variant="h2" component="h2" gutterBottom className="text-center">{day.toISOString().split('T')[0]}</Typography>
-    <DayButtonList day={day.toISOString().split('T')[0]} onTimes={setTimes} submitted={submitted} />
+    <Typography variant="h2" component="h2" gutterBottom className="text-center">{getDayAsString()}</Typography>
+    <DayButtonList day={getDayAsString()} onTimes={setTimes} submitted={submitted} />
     <ActivityDropDown onActivity={setActivity} onClickButton={onClick} />
   </div>
   )
