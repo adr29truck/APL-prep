@@ -1,5 +1,5 @@
 export const Header = () => {
   return (<header>
-    <h1>Some Page Name</h1>
+    <h3 className="text-center">Timeline</h3>
   </header>)
 }

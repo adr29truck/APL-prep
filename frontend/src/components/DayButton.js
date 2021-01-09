@@ -18,6 +18,6 @@ export const DayButton = (props) => {
         onChange={props.onClickCheckBox}
       />
     }
-    label={ props.object.id < 10 ? '0' + props.object.id : props.object.id }
+    label={ props.object.label }
   />)
 }

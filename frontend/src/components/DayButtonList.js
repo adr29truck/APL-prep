@@ -7,7 +7,6 @@ export const DayButtonList = (props) => {
   // props
   // day - date ex 2020-01-01
 
-  // const rendered = true;
   const [buttons, setButtons] = useState([]);
   const [times, setTimes] = useState([]);
   const onClickCheckBox = (x) => {
@@ -33,8 +32,10 @@ export const DayButtonList = (props) => {
     const fetchTimes = async () => {
       const temp = await API.get('times/' + props.day + '/1');
       for (let x of temp) {
+        x.label = x.name.split('T')[1];
+        x.label = x.label.length === 1 ? '0' + x.label : x.label
         x.isChecked = false;
-        if (x.activity != null) {  x.style ={ color: 'green'} };
+        if (x.color != null) {  x.style ={ color: x.color} };
       }
       setTimes(temp);
       console.log('Fetched Times');
@@ -68,7 +69,7 @@ export const DayButtonList = (props) => {
   }, [times]);
 
   return (
-  <FormGroup row>
+  <FormGroup column>
     {buttons}
   </FormGroup>)
 }
