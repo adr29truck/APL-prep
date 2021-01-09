@@ -1,0 +1,43 @@
+// import logo from './logo.svg';
+import './App.css';
+import { Header } from './components/Header';
+import  Typography from '@material-ui/core/Typography';
+import {useState, useEffect } from 'react'
+import {DayButtonList} from './components/DayButtonList';
+import {ActivityDropDown} from './components/ActivityDropDown';
+import API from './helpers/API';
+
+export function App() {
+  const [times, setTimes] = useState([]);
+  const [activitiy, setActivity] = useState(0);
+
+  function onClick(_) {
+    const filteredTimes = times.filter(x => x.isChecked === true);
+    for (const t of filteredTimes) {
+      API.post('times/' + t.name + '/1', {id: t.id, activity_id: activitiy});
+    }
+  }
+
+  const [day, setDay] = useState(new Date())
+
+  function onClickLeftArrow() {
+    setDay(q => new Date(q.valueOf() - 86_400_000))
+  }
+
+  function onClickRightArrow() {
+    const temp = new Date(day + 86_400_000)
+    const temp2 = new Date()
+    if (!(temp.getFullYear() === temp2.getFullYear() && temp.getDate() === temp2.getDate() && temp.getMonth() === temp2.getMonth())) {
+      setDay(q => new Date(q.valueOf() + 86_400_000))
+    }
+  }
+
+  return (
+  <div>
+    <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
+    <Typography variant="h2" component="h2" gutterBottom className="text-center">{day.toISOString().split('T')[0]}</Typography>
+    <DayButtonList day={day.toISOString().split('T')[0]} onTimes={setTimes}/>
+    <ActivityDropDown onActivity={setActivity} onClickButton={onClick} />
+  </div>
+  )
+}
