@@ -1,7 +1,10 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import API from '../helpers/API';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 export const ActivityDropDown = (props) => {
   // props
@@ -13,47 +16,57 @@ export const ActivityDropDown = (props) => {
   const rendered = true;
 
   useEffect(() => {
-    console.log('RENDER')
+    console.log('RENDER');
     const fetchActivities = async () => {
-      const temp = await API.get('activities')
+      const temp = await API.get('activities');
       setActivities(temp);
       console.log('Fetched Activities', temp);
-    }
+    };
     fetchActivities();
-  }, [rendered]); 
+  }, [rendered]);
 
   useEffect(() => {
     const generateOptions = (empty = true) => {
       if (empty) {
-        setOptions(q => { const temp = [...q]; temp.push(<option key={'option_' + 0} aria-label="None" value={null} > - </option>); return temp});
+        setOptions((q) => {
+          const temp = [...q]; temp.push(<option key={'option_' + 0} aria-label="None" value={null} > - </option>); return temp;
+        });
       }
-      for (let x of activities) {
-        setOptions(q => {const temp = [...q]; temp.push(<option key={ 'option_' + x.id} aria-label={x.name} value={x.id} > {x.name}</option>); return temp});
+      for (const x of activities) {
+        setOptions((q) => {
+          const temp = [...q]; temp.push(<option key={ 'option_' + x.id} aria-label={x.name} value={x.id} > {x.name}</option>); return temp;
+        });
       }
     };
     if (activities.length > 0 && options.length === 0) {
-      generateOptions()
+      generateOptions();
     }
-  },[activities, options.length])
-  
+  }, [activities, options.length]);
+
   function onChange({target}) {
     props.onActivity(target.value);
   }
-  
+
   return (
-  <div>
-    <Select
-      style={{color: "#fff"}}
-      label="Activity Selector"
-      native
-      onChange={onChange}
-      inputProps={{
-        name: 'activiity',
-      }}
+    <div>
+      <Select
+        style={{color: '#fff'}}
+        label="Activity Selector"
+        native
+        onChange={onChange}
+        inputProps={{
+          name: 'activiity',
+        }}
       >
-      {options}
-    </Select>
-    <Button id="submitButton" variant="outlined" type="submit" color="primary" onClick={props.onClickButton}>Submit</Button>
-  </div>
+        {options}
+      </Select>
+      <Button id="submitButton" variant="outlined" type="submit" color="primary" onClick={props.onClickButton}>Submit</Button>
+    </div>
   );
-}
+};
+
+ActivityDropDown.propTypes = {
+  onClickButton: PropTypes.func,
+  activities: PropTypes.array,
+  onActivity: PropTypes.func,
+};

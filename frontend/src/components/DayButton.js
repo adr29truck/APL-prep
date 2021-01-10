@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
@@ -7,17 +10,23 @@ export const DayButton = (props) => {
   // onClickCheckBox - Func
 
   return (
-  <FormControlLabel
-    control={
-      <Checkbox
-        style={ props.object.style }
-        name={props.object.name}
-        // checked={props.object.isChecked}
-        color="primary"
-        id={toString(props.object.id)}
-        onChange={props.onClickCheckBox}
-      />
-    }
-    label={ props.object.label }
-  />)
-}
+    <FormControlLabel
+      control={
+        <Checkbox
+          style={ props.object.style }
+          name={props.object.name}
+          // checked={props.object.isChecked}
+          color="primary"
+          id={toString(props.object.id)}
+          onChange={props.onClickCheckBox}
+        />
+      }
+      label={ props.object.label }
+    />);
+};
+
+DayButton.propTypes = {
+  object: PropTypes.object,
+  onClickCheckBox: PropTypes.func,
+};
+
