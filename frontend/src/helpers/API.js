@@ -21,6 +21,8 @@ export default class API {
     return axios.get(baseUrl() + route)
         .then((res) => {
           return res.data;
+        }).catch((error) => {
+          console.log(error);
         });
   }
 
@@ -34,6 +36,8 @@ export default class API {
     return axios.post(baseUrl() + route, data)
         .then((res) => {
           return res.data;
+        }).catch((error) => {
+          console.log(error);
         });
   }
 }
