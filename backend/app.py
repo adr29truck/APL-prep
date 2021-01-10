@@ -3,6 +3,7 @@ from flask import request
 from flask.json import jsonify
 from modules.time_ import TimeBase as Time
 from modules.activity import Activity
+from modules.user import User
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -77,6 +78,33 @@ def  activity():
     except:
       return ('Bad', 400)
 
+@app.route('/register', methods = ['POST'])
+@cross_origin()
+def  register():
+  s    = Session()
+  data = dict(request.get_json())
+  try:
+    password, salt = User.hash_password(data['password'])
+    new_activity = User(name=data['name'], user_name=data['user_name'], password=password, salt=salt)
+    s.add(new_activity)
+    s.commit()
+    return jsonify(new_activity.serialize)
+  except:
+    return ('Bad', 400)
+
+@app.route('/sign-in', methods = ['POST'])
+@cross_origin()
+def sign_in():
+  s = Session()
+  data = dict(request.get_json())
+  try:
+    temp = s.query(User).filter(User.user_name == data['user_name']).one()
+    if temp.check_password(data['password']):
+      return jsonify(temp.serialize)
+    else:
+      return ('Unauthorized', 401)
+  except:
+    return ('Unauthorized', 401)
 
 
 

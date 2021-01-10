@@ -26,6 +26,13 @@ def create_tables():
                 db.Column('user_id', db.Integer(), nullable=False),
                 db.Column('color', db.String(50), nullable=False, default='green'),
                 )
+  users = db.Table('users', metadata,
+                db.Column('Id', db.Integer(), primary_key=True),
+                db.Column('name', db.String(50), nullable=False),
+                db.Column('user_name', db.String(50), nullable=False),
+                db.Column('password', db.Binary(), nullable=False),
+                db.Column('salt', db.Binary(), nullable=False),
+                )
 
   metadata.create_all(engine)
   print('Created tables')
