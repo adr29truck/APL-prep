@@ -1,8 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
-import sqlalchemy as db
-Base = declarative_base()
+import flask_sqlalchemy
 
-class Activity(Base): 
+db = flask_sqlalchemy.SQLAlchemy()
+
+class Activity(db.Model): 
     """ TimeBase handles logic related to Activities """
     __tablename__ = 'activities'
     id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)

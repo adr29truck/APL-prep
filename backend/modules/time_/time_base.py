@@ -1,10 +1,8 @@
-from sqlalchemy.ext.declarative import declarative_base
-import sqlalchemy as db
-from sqlalchemy.orm import relationship
-# from sqlalchemy.sql.schema import ForeignKey
-Base = declarative_base()
+import flask_sqlalchemy
 
-class TimeBase(Base):
+db = flask_sqlalchemy.SQLAlchemy()
+
+class TimeBase(db.Model):
     """ TimeBase handles logic related to times """
     __tablename__ = 'times'
     id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)

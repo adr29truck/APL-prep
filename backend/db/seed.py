@@ -29,7 +29,7 @@ def create_tables():
   users = db.Table('users', metadata,
                 db.Column('Id', db.Integer(), primary_key=True),
                 db.Column('name', db.String(50), nullable=False),
-                db.Column('user_name', db.String(50), nullable=False),
+                db.Column('username', db.String(50), nullable=False, unique=True),
                 db.Column('password', db.Binary(), nullable=False),
                 db.Column('salt', db.Binary(), nullable=False),
                 )

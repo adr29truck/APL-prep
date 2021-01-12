@@ -1,18 +1,39 @@
-from sqlalchemy.ext.declarative import declarative_base
-import sqlalchemy as db
-Base = declarative_base()
-
+import flask_sqlalchemy
 import hashlib
 import os
 
-class User(Base): 
+db = flask_sqlalchemy.SQLAlchemy()
+
+class User(db.Model):
   """ A User and associated logic """
   __tablename__ = 'users'
   id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)
   name          = db.Column(db.String(50))
-  user_name     = db.Column(db.String(50))
+  username     = db.Column(db.String(50), unique=True)
   password      = db.Column(db.Binary(255))
   salt          = db.Column(db.Binary())
+
+
+  # Flask_praetorian methods
+  @property
+  def rolenames(self):
+    try:
+      return self.roles.split(',')
+    except Exception:
+      return []
+
+  @classmethod
+  def lookup(cls, username):
+    return cls.query.filter_by(username=username).one_or_none()
+
+  @classmethod
+  def identify(cls, id):
+    return cls.quer.get(id)
+
+  @property
+  def identity(self):
+    return self.id  
+
 
   @property
   def serialize(self):
@@ -22,10 +43,10 @@ class User(Base):
         # 'modified_at': dump_datetime(self.modified_at),
         # This is an example how to deal with Many2Many relations
         'name': self.name,
-        'user_name': self.user_name,
+        'username': self.username,
         # 'password': self.password,
     }
-  
+
   @staticmethod
   def hash_password(password):
     salt = os.urandom(32)
@@ -36,7 +57,7 @@ class User(Base):
         100_000 # It is recommended to use at least 100,000 iterations of SHA-256 
     ), salt)
 
-  def check_password(self, password):
+  def authenticate(self, password):
     new_key = hashlib.pbkdf2_hmac(
         'sha256',
         password.encode('utf-8'),
@@ -46,4 +67,4 @@ class User(Base):
     return (True if new_key == self.password else False)
 
   def __repr__(self): 
-    return "<Time(name='%s', id='%s', user_name='%s', password='%a', salt='%s')>" % (self.name, self.id, self.user_name, self.password, self.salt)
+    return "<Time(name='%s', id='%s', username='%s', password='%a', salt='%s')>" % (self.name, self.id, self.username, self.password, self.salt)
