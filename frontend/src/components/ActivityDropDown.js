@@ -34,7 +34,8 @@ export const ActivityDropDown = (props) => {
       }
       for (const x of activities) {
         setOptions((q) => {
-          const temp = [...q]; temp.push(<option key={ 'option_' + x.id} aria-label={x.name} value={x.id} > {x.name}</option>); return temp;
+          const temp = [...q]; temp.push(<option key={ 'option_' + x.id} aria-label={x.name}
+            value={x.id} > {x.name}</option>); return temp;
         });
       }
     };
@@ -43,6 +44,10 @@ export const ActivityDropDown = (props) => {
     }
   }, [activities, options.length]);
 
+  /**
+   * Handles on change
+   * @param {*} target - event target
+   */
   function onChange({target}) {
     props.onActivity(target.value);
   }

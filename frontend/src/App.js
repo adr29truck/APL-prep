@@ -6,6 +6,7 @@ import {Header} from './components/Header';
 import Typography from '@material-ui/core/Typography';
 import {DayButtonList} from './components/DayButtonList';
 import {ActivityDropDown} from './components/ActivityDropDown';
+import {LoginForm} from './components/LoginForm';
 import API from './helpers/API';
 
 
@@ -17,6 +18,7 @@ export function App() {
   const [times, setTimes] = useState([]);
   const [activitiy, setActivity] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [user, setUser] = useState(null);
 
   /**
    * Submitts changes to times to the backend
@@ -66,8 +68,48 @@ export function App() {
     }
   }
 
+  /**
+   * Handles login
+   * @param {event} e - js event
+   */
+  async function onSubmit(e) {
+    e.preventDefault();
+    // Yasoob , strongpassword
+    const token = await API.post('api/login', {username: username, password: password});
+    window.localStorage.setItem('jwt', token['access_token']);
+    setUser(parseJwt(token['access_token'])['id']);
+    console.log(user);
+  }
+
+  /**
+   * Thingy
+   * @param {*} token - x
+   * @return {Object} - data
+   */
+  function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  };
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const loginFormFields = [
+    {name: 'username', type: 'text', value: username, onChange: ({target}) => {
+      setUsername(target.value);
+    }},
+    {name: 'password', type: 'password', value: password, onChange: ({target}) => {
+      setPassword(target.value);
+    }},
+  ];
+
   return (
     <div>
+      <LoginForm fields={loginFormFields} onSubmit={onSubmit} />
       <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
       <Typography variant="h2" component="h2" gutterBottom className="text-center">{getDayAsString()}</Typography>
       <DayButtonList day={getDayAsString()} onTimes={setTimes} submitted={submitted} />

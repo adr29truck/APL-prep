@@ -1,7 +1,15 @@
-// import {useRef} from 'react'
+import PropTypes from 'prop-types';
+import React from 'react';
 
 export const LoginForm = (props) => {
-  const fields = props.fields.map((field) => <input type={field.type} placeholder={field.placeholder || field.name} name={field.name} key={field.name}></input>);
+  const fields = props.fields.map((field) =>
+    <input type={field.type}
+      placeholder={field.placeholder || field.name}
+      name={field.name}
+      value={field.value}
+      onChange={field.onChange}
+      key={field.name}>
+    </input>);
 
 
   return (
@@ -20,4 +28,9 @@ LoginForm.defaultProps = {
   onSubmit: (e) => {
     e.preventDefault(); console.log('A form was submitted');
   },
+};
+
+LoginForm.propTypes = {
+  fields: PropTypes.array,
+  onSubmit: PropTypes.func,
 };
