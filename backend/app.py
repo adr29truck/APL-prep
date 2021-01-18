@@ -33,16 +33,16 @@ cors.init_app(app)
 from functools import wraps
 
 def require_authentication(method):
-  """
-  Verifies that the request has a valid authorization token
-  othervise status 401 is returned.
+    """
+    Verifies that the request has a valid authorization token
+    othervise status 401 is returned.
 
-  Args:
-      method (function): The decorated function
+    Args:
+        method (function): The decorated function
 
-  Returns:
-      http Response: Http response provided by method if authorized else 401
-  """
+    Returns:
+        http Response: Http response provided by method if authorized else 401
+    """
     @wraps(method)
 
     def authenticate(*args, **kwargs):
@@ -51,10 +51,12 @@ def require_authentication(method):
       # print(guard.extract_jwt_token(temp)['exp'])
       try:
         user_id = guard.extract_jwt_token(temp)['id']
-        return method(*args, **kwargs)
+        print('USER ID: ', user_id)
         # return authenticate(*args, **kwargs)
       except:
         flask.abort(401)
+      finally:
+        return method(*args, **kwargs)
     return authenticate
 
 # Set up some routes for the example
