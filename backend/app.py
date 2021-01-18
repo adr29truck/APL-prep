@@ -30,6 +30,33 @@ db.init_app(app)
 # Initializes CORS so that the api_tool can talk to the example app
 cors.init_app(app)
 
+from functools import wraps
+
+def require_authentication(method):
+  """
+  Verifies that the request has a valid authorization token
+  othervise status 401 is returned.
+
+  Args:
+      method (function): The decorated function
+
+  Returns:
+      http Response: Http response provided by method if authorized else 401
+  """
+    @wraps(method)
+
+    def authenticate(*args, **kwargs):
+      temp = flask.request.headers.get('Authorization')
+      # TODO: Check that the token has not expired
+      # print(guard.extract_jwt_token(temp)['exp'])
+      try:
+        user_id = guard.extract_jwt_token(temp)['id']
+        return method(*args, **kwargs)
+        # return authenticate(*args, **kwargs)
+      except:
+        flask.abort(401)
+    return authenticate
+
 # Set up some routes for the example
 @app.route('/api/')
 def home():
@@ -99,8 +126,11 @@ def protected():
     return {message: f'protected endpoint (allowed user {flask_praetorian.current_user().username})'}
 
 
-@app.route('/times/<time>/<user_id>', methods = ['GET', 'POST'])
-def times_user_date(time, user_id):
+@app.route('/times/<time>', methods = ['GET', 'POST'])
+@require_authentication
+def times_user_date(time):
+  temp = flask.request.headers.get('Authorization')
+  user_id = guard.extract_jwt_token(temp)['id']
   if flask.request.method == 'GET':
     activities = Activity.query.all()
     temp = Time.query.filter(Time.name.like(f'%{time}%'),Time.user_id == user_id).all()
