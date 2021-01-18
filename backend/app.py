@@ -152,21 +152,26 @@ def times_user_date(time):
   elif flask.request.method == 'POST':
     try:
       data = dict(flask.request.get_json())
+      Time.query.filter(Time.id == data['id']).update(dict(activity_id=data['activity_id']))
       temp = Time.query.filter(Time.id == data['id']).one()
-      temp.activity_id = data['activity_id']
-      temp.commit()
+      db.session.commit()
+
       return flask.jsonify(temp.serialize)
     except:
       return ('Bad', 400)
 
 @app.route('/activities', methods = ['GET', 'POST'])
+@require_authentication
 def  activity():
+  temp = flask.request.headers.get('Authorization')
+  user_id = guard.extract_jwt_token(temp)['id']
   if flask.request.method == 'GET':
+    # TODO: Fetch all activities related to the signed-in user and from user 0
     return flask.jsonify([t.serialize for t in Activity.query.all()])
   elif flask.request.method == 'POST':
     try:
       data = dict(flask.request.get_json())
-      new_activity = Activity(name=data['name'], user_id=0)
+      new_activity = Activity(name=data['name'], user_id=user_id)
       db.session.add(new_activity)
       db.session.commit()
       return flask.jsonify(new_activity.serialize)
