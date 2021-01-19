@@ -8,6 +8,16 @@ const baseUrl = () => {
   }
 };
 
+const axiosConfig = {
+  headers: {
+    'content-Type': 'application/json',
+    'Accept': '/',
+    'Cache-Control': 'no-cache',
+    'authorization': window.localStorage.getItem('jwt'),
+  },
+  credentials: 'true',
+};
+
 /**
  * Represents everythin API related
  */
@@ -18,9 +28,11 @@ export default class API {
    * @return {object} JSON response from API request
    */
   static get(route) {
-    return axios.get(baseUrl() + route)
+    return axios.get(baseUrl() + route, axiosConfig)
         .then((res) => {
           return res.data;
+        }).catch((error) => {
+          console.log(error);
         });
   }
 
@@ -31,9 +43,11 @@ export default class API {
    * @return {object} JSON response from API request
    */
   static post(route, data) {
-    return axios.post(baseUrl() + route, data)
+    return axios.post(baseUrl() + route, data, axiosConfig)
         .then((res) => {
           return res.data;
+        }).catch((error) => {
+          console.log(error);
         });
   }
 }
