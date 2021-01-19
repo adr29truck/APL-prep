@@ -27,7 +27,7 @@ export function App() {
   async function onClick(_) {
     const filteredTimes = times.filter((x) => x.isChecked === true);
     for (const t of filteredTimes) {
-      await API.post('times/' + t.name + '/1', {id: t.id, activity_id: activitiy});
+      await API.post('times/' + t.name, {id: t.id, activity_id: activitiy});
     }
     setSubmitted((q) => !q);
   }
@@ -107,13 +107,20 @@ export function App() {
     }},
   ];
 
-  return (
-    <div>
-      <LoginForm fields={loginFormFields} onSubmit={onSubmit} />
-      <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
-      <Typography variant="h2" component="h2" gutterBottom className="text-center">{getDayAsString()}</Typography>
-      <DayButtonList day={getDayAsString()} onTimes={setTimes} submitted={submitted} />
-      <ActivityDropDown onActivity={setActivity} onClickButton={onClick} />
-    </div>
-  );
+  if (user != null) {
+    return (
+      <div>
+        <Header onClickLeftArrow={onClickLeftArrow} onClickRightArrow={onClickRightArrow} />
+        <Typography variant="h2" component="h2" gutterBottom className="text-center">{getDayAsString()}</Typography>
+        <DayButtonList day={getDayAsString()} onTimes={setTimes} submitted={submitted} />
+        <ActivityDropDown onActivity={setActivity} onClickButton={onClick} />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <LoginForm fields={loginFormFields} onSubmit={onSubmit} />
+      </div>
+    );
+  }
 }
