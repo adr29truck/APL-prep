@@ -13,7 +13,7 @@ const axiosConfig = {
     'content-Type': 'application/json',
     'Accept': '/',
     'Cache-Control': 'no-cache',
-    'authorization': window.localStorage.getItem('jwt'),
+    'Authorization': window.localStorage.getItem('jwt'),
   },
   credentials: 'true',
 };
