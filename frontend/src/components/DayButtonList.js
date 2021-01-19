@@ -35,7 +35,7 @@ export const DayButtonList = (props) => {
 
   useEffect(() => {
     const fetchTimes = async () => {
-      const temp = await API.get('times/' + props.day + '/1');
+      const temp = await API.get('times/' + props.day);
       for (const x of temp) {
         x.label = x.name.split('T')[1];
         x.label = x.label.length === 1 ? '0' + x.label : x.label;

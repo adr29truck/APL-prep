@@ -67,4 +67,4 @@ class User(db.Model):
     return (True if new_key == self.password else False)
 
   def __repr__(self): 
-    return "<Time(name='%s', id='%s', username='%s', password='%a', salt='%s')>" % (self.name, self.id, self.username, self.password, self.salt)
+    return "<User(name='%s', id='%s', username='%s', password='%a', salt='%s')>" % (self.name, self.id, self.username, self.password, self.salt)
