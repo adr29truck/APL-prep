@@ -74,27 +74,10 @@ export function App() {
    */
   async function onSubmit(e) {
     e.preventDefault();
-    // Yasoob , strongpassword
-    const token = await API.post('api/login', {username: username, password: password});
-    window.localStorage.setItem('jwt', token['access_token']);
-    setUser(parseJwt(token['access_token'])['id']);
-    console.log(user);
+    dispatch(signIn({username: username, password: password}));
+    setUsername('');
+    setPassword('');
   }
-
-  /**
-   * Thingy
-   * @param {*} token - x
-   * @return {Object} - data
-   */
-  function parseJwt(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-  };
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -124,3 +107,5 @@ export function App() {
     );
   }
 }
+
+export default connect(mapStateToProps)(App);
