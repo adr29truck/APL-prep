@@ -81,6 +81,13 @@ flask run -p 5000 --host=0.0.0.0
 
 If it's not self explanatory, then maybe the UI need's some rework.. Just open an issue and I'll check in.
 
+Example curl for retriving a JWT token / signing in
+
+```bash
+curl http://localhost:5000/api/login -X POST \
+         -d '{"username":"admin", "password":"admin"}'
+```
+
 ## Deploying
 
 Well it's not deployed yet so this isn't documented.
