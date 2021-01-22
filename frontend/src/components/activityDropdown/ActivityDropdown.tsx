@@ -44,7 +44,6 @@ const ActivityDropDown = ({ onClickButton }: any) => {
       for (const x of activities) {
         setOptions((q) => {
           const temp = [...q];
-          console.log(x.id);
           temp.push(
             <option key={`option_${x.id}`} aria-label={x.name} value={x.id}>
               {' '}
@@ -55,7 +54,6 @@ const ActivityDropDown = ({ onClickButton }: any) => {
         });
       }
     };
-    console.log(activities, options.length);
     if (activities.length > 0) {
       generateOptions();
     }

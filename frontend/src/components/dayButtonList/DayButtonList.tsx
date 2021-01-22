@@ -25,9 +25,6 @@ const DayButtonList = () => {
   const count = 1;
 
   useEffect(() => {
-    console.log('Re rendered Times, old Btn ->', buttons);
-    console.log('new Times ->', times);
-
     // eslint-disable-next-line no-restricted-syntax
     setButtons([]);
     // eslint-disable-next-line no-restricted-syntax
