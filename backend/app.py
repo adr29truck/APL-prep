@@ -52,7 +52,8 @@ def require_authentication(method):
       try:
         user_id = guard.extract_jwt_token(temp)['id']
         print('USER ID: ', user_id)
-        # return authenticate(*args, **kwargs)
+        if user_id == None:
+          flask.abort(401)
       except:
         flask.abort(401)
       finally:
@@ -72,7 +73,7 @@ def login():
     issuing a JWT token.
     .. example::
        $ curl http://localhost:5000/api/login -X POST \
-         -d '{"username":"Yasoob","password":"strongpassword"}'
+         -d '{"username":"admin","password":"admin"}'
     """
     req = flask.request.get_json(force=True)
     username = req.get('username', None)
