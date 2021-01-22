@@ -9,6 +9,10 @@ body {
   color: #ffffff !important;
 }
 
+input, label {
+  color: #ffffff !important;
+}
+
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -34,6 +38,14 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
+
+/* FIXME: */
+/*  Resolves input underline issue (ish)  https://github.com/mui-org/material-ui/issues/4472#issuecomment-326167263 */
+input:focus:not([read-only]) {
+  border-bottom: none!important;
+	box-shadow: none!important;	
+} 
+
 
 /* 
 .App {
