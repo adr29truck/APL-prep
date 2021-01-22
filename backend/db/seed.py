@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import datetime
 import sqlalchemy as db
 from modules.activity.activity import Activity
+from modules.user import User
 
 engine = db.create_engine('sqlite:///data.sqlite', echo=True)
 connection = engine.connect()
@@ -59,6 +60,11 @@ def populate_tables():
   session.add(new_activity)
   new_activity = Activity(name="Socialization", user_id=0, color="yellow")
   session.add(new_activity)
+  session.commit()
+
+  password, salt = User.hash_password('admin')
+  new_user = User(name="Admin", username="admin", password=password, salt=salt)
+  session.add(new_user)
   session.commit()
   print('Done populating')
 
