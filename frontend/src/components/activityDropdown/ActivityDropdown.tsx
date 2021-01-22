@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
 import { getActivities } from '../../features/activity/selectors';
 
 const ActivityDropDown = ({ onClickButton }: any) => {
@@ -21,12 +22,6 @@ const ActivityDropDown = ({ onClickButton }: any) => {
   useEffect(() => {
     const generateOptions = (empty = true) => {
       if (empty) {
-        // setOptions([
-        //   <option key={`option_${0}`} aria-label="None" value={undefined}>
-        //     {' '}
-        //     -{' '}
-        //   </option>,
-        // ]);
         setOptions([]);
         setOptions((q) => {
           const temp = [...q];
@@ -35,7 +30,6 @@ const ActivityDropDown = ({ onClickButton }: any) => {
               {' '}
               -{' '}
             </option>
-            // return [<option key={'option_' + 0} aria-label="None" value={null} > - </option>]
           );
           return temp;
         });
@@ -74,7 +68,11 @@ const ActivityDropDown = ({ onClickButton }: any) => {
 
   return (
     <div>
+      <InputLabel htmlFor="select_field_activity_dropdown">
+        Select Activity
+      </InputLabel>
       <Select
+        id="select_field_activity_dropdown"
         style={{ color: '#fff' }}
         label="Activity Selector"
         native

@@ -18,15 +18,17 @@ interface Props {
 const Form = ({ fields, onSubmit }: Props) => {
   const fieldsJsx = fields.map((field) => (
     <div>
-      <InputLabel htmlFor={`input_field_${field.name}`}>{capitalize(field.name)}</InputLabel>
+      <InputLabel htmlFor={`input_field_${field.name}`}>
+        {capitalize(field.name)}
+      </InputLabel>
       <TextField
-      id={`input_field_${field.name}`}
-      name={field.name}
-      onChange={field.onChange}
-      placeholder={field.placeholder || capitalize(field.name)}
-      type={field.type}
-      value={field.value}
-      inputProps={{ 'aria-label': field.placeholder }}
+        id={`input_field_${field.name}`}
+        name={field.name}
+        onChange={field.onChange}
+        placeholder={field.placeholder || capitalize(field.name)}
+        type={field.type}
+        value={field.value}
+        inputProps={{ 'aria-label': field.placeholder }}
       />
     </div>
   ));
