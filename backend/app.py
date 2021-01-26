@@ -148,7 +148,7 @@ def times_user_date(time):
         activities = Activity.query.all()
         temp = Time.query.filter(
             Time.name.like(f"%{time}%"), Time.user_id == user_id
-        ).all()
+        ).order_by(Time.id).all()
         count = 0
         while len(temp) == 0:
             generate_times_in_db(time)
@@ -187,7 +187,7 @@ def activity():
     user_id = guard.extract_jwt_token(temp)["id"]
     if flask.request.method == "GET":
         # TODO: Fetch all activities related to the signed-in user and from user 0
-        return flask.jsonify([t.serialize for t in Activity.query.all()])
+        return flask.jsonify([t.serialize for t in Activity.query.order_by(Activity.id).all()])
     elif flask.request.method == "POST":
         try:
             data = dict(flask.request.get_json())
