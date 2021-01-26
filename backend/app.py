@@ -1,4 +1,3 @@
-import os
 import flask
 import flask_sqlalchemy
 import flask_praetorian
@@ -7,6 +6,7 @@ from modules.time_ import TimeBase as Time
 from modules.activity import Activity
 from modules.user import User
 from datetime import datetime
+import const
 
 db = flask_sqlalchemy.SQLAlchemy()
 guard = flask_praetorian.Praetorian()
@@ -23,7 +23,7 @@ app.config['JWT_REFRESH_LIFESPAN'] = {'days': 30}
 # Initialize the flask-praetorian instance for the app
 guard.init_app(app, User)
 # Initialize a local database for the example
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://postgres:docker@{os.environ.get('host')}:5432/postgres"
+app.config['SQLALCHEMY_DATABASE_URI'] = const.DB_CONNECTION_STRING
 db.init_app(app)
 
 # Initializes CORS so that the api_tool can talk to the example app

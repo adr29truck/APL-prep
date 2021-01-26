@@ -5,10 +5,9 @@ import datetime
 import sqlalchemy as db
 from modules.activity.activity import Activity
 from modules.user import User
-import os
+import const
 
-host = os.environ.get('host')
-engine = db.create_engine(f"postgresql+psycopg2://postgres:docker@{host}:5432/postgres", echo=True)
+engine = db.create_engine(const.DB_CONNECTION_STRING, echo=True)
 connection = engine.connect()
 metadata = db.MetaData()
 Session = sessionmaker(bind=engine)
