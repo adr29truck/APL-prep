@@ -14,15 +14,12 @@ export const Home: React.FC = () => {
   const currentActivity = useSelector(getCurrentActivity);
   const currentTime = useSelector(getCurrentTime);
 
-  // const [x, setX] = /useState(0);
   function onSubmit() {
     updateTimes(changedTimes, currentActivity, currentTime);
-    // setX((z) => z + 1);
   }
 
   return (
     <Fragment>
-      <LoginForm />
       <DayButtonList />
       <ActivityDropdown onClickButton={onSubmit} />
     </Fragment>
