@@ -1,6 +1,7 @@
 # APL-prep
 
 The effective adventure
+
 ![Python Lint](https://github.com/adr29truck/APL-prep/workflows/Lint/badge.svg)
 
 ## Table of Contents
