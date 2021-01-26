@@ -5,7 +5,7 @@ db = flask_sqlalchemy.SQLAlchemy()
 class Activity(db.Model): 
     """ TimeBase handles logic related to Activities """
     __tablename__ = 'activities'
-    id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)
+    id            = db.Column(db.Integer(), primary_key=True)
     name          = db.Column(db.String(50))
     user_id       = db.Column(db.Integer())
     color         = db.Column(db.String(50))

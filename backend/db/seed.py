@@ -5,8 +5,10 @@ import datetime
 import sqlalchemy as db
 from modules.activity.activity import Activity
 from modules.user import User
+import os
 
-engine = db.create_engine('sqlite:///data.sqlite', echo=True)
+host = os.environ.get('host')
+engine = db.create_engine(f"postgresql+psycopg2://postgres:docker@{host}:5432/postgres", echo=True)
 connection = engine.connect()
 metadata = db.MetaData()
 Session = sessionmaker(bind=engine)
@@ -16,19 +18,19 @@ Base = declarative_base()
 def create_tables():
   print('Processing tables..')
   times = db.Table('times', metadata,
-                db.Column('Id', db.Integer(), primary_key=True),
+                db.Column('id', db.Integer(), primary_key=True),
                 db.Column('name', db.String(50), nullable=False),
                 db.Column('activity_id', db.Integer(), default=None),
                 db.Column('user_id', db.Integer())
                 )
   activities = db.Table('activities', metadata,
-                db.Column('Id', db.Integer(), primary_key=True),
+                db.Column('id', db.Integer(), primary_key=True),
                 db.Column('name', db.String(50), nullable=False),
                 db.Column('user_id', db.Integer(), nullable=False),
                 db.Column('color', db.String(50), nullable=False, default='green'),
                 )
   users = db.Table('users', metadata,
-                db.Column('Id', db.Integer(), primary_key=True),
+                db.Column('id', db.Integer(), primary_key=True),
                 db.Column('name', db.String(50), nullable=False),
                 db.Column('username', db.String(50), nullable=False, unique=True),
                 db.Column('password', db.Binary(), nullable=False),

@@ -7,7 +7,7 @@ db = flask_sqlalchemy.SQLAlchemy()
 class User(db.Model):
   """ A User and associated logic """
   __tablename__ = 'users'
-  id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)
+  id            = db.Column(db.Integer(), primary_key=True)
   name          = db.Column(db.String(50))
   username     = db.Column(db.String(50), unique=True)
   password      = db.Column(db.Binary(255))

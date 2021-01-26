@@ -1,0 +1,11 @@
+FROM node:14
+WORKDIR /app
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
+RUN yarn install
+COPY . /app
+
+EXPOSE 3000
+
+# Start the main process.
+CMD ["yarn", "run", "start"]
