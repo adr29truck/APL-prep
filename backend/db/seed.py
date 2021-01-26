@@ -13,6 +13,7 @@ metadata = db.MetaData()
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 def create_tables():
     print("Processing tables..")
     times = db.Table(
