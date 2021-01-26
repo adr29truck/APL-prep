@@ -5,7 +5,7 @@ db = flask_sqlalchemy.SQLAlchemy()
 class TimeBase(db.Model):
     """ TimeBase handles logic related to times """
     __tablename__ = 'times'
-    id            = db.Column(db.Integer(), db.Sequence('time_id_seq'), primary_key=True)
+    id            = db.Column(db.Integer(), primary_key=True)
     name          = db.Column(db.String(50))
     activity_id   = db.Column('activity_id', db.Integer(), default=None)
     # activity      = relationship("Activity", foreign_keys='times.activity_id')

@@ -22,9 +22,8 @@ app.config['JWT_REFRESH_LIFESPAN'] = {'days': 30}
 
 # Initialize the flask-praetorian instance for the app
 guard.init_app(app, User)
-
 # Initialize a local database for the example
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(os.getcwd(), 'data.sqlite')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://postgres:docker@{os.environ.get('host')}:5432/postgres"
 db.init_app(app)
 
 # Initializes CORS so that the api_tool can talk to the example app

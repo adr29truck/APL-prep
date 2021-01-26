@@ -33,7 +33,7 @@ What things you need to install the software and how to install them.
 - Python3
 - Node.js
 - Yarn (or npm)
-
+- Docker
 
 ### Installing
 
@@ -44,6 +44,28 @@ Clone the repository to your local machine
 ```console
 git clone https://github.com/adr29truck/APL-prep.git
 ```
+
+#### Docker installation (Recommended)
+
+Run the following to get up and running
+
+```console
+docker-compose up
+```
+
+To create the correct database you are also required to run
+
+```console
+docker-compose exec backend python seeder.py
+```
+
+or if the container is not currently running.
+
+```console
+docker-compose run backend python seeder.py
+```
+
+#### Non Docker installation
 
 Install all dependencies
 
@@ -64,10 +86,26 @@ pip3 install -r requirements.txt
 
 ### Running
 
+#### Using Docker
+
+```console
+docker-compose up
+```
+
+Requires the installation instructions for docker to have been followed.
+
+#### Not using Docker
+
 Frontend:
 
 ```console
 yarn start
+```
+
+database:
+
+```console
+docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 postgres
 ```
 
 Backend:
@@ -75,7 +113,6 @@ Backend:
 ```console
 flask run -p 5000 --host=0.0.0.0
 ```
-
 
 ## Usage
 
