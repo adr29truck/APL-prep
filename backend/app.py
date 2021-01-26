@@ -77,13 +77,14 @@ def login():
     req = flask.request.get_json(force=True)
     username = req.get('username', None)
     password = req.get('password', None)
-    user = User.lookup(username)
-    # user = guard.authenticate(username, password)
-    # TODO: Add rescue if user is None
-    if user.authenticate(password):
-      ret = {'access_token': guard.encode_jwt_token(user)}
-      return ret, 200
-    else:
+    try:
+      user = User.lookup(username)
+      if user.authenticate(password):
+        ret = {'access_token': guard.encode_jwt_token(user)}
+        return ret, 200
+      else:
+        return ('bad', 401)
+    except:
       return ('bad', 401)
 
   
