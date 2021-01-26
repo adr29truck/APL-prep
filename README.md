@@ -1,6 +1,7 @@
 # APL-prep
 
 The effective adventure
+![Python Lint](https://github.com/adr29truck/APL-prep/workflows/Lint/badge.svg)
 
 ## Table of Contents
 
@@ -10,7 +11,11 @@ The effective adventure
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installing](#installing)
+      - [Docker installation (Recommended)](#docker-installation-recommended)
+      - [Non Docker installation](#non-docker-installation)
     - [Running](#running)
+      - [Using Docker](#using-docker)
+      - [Not using Docker](#not-using-docker)
   - [Usage](#usage)
   - [Deploying](#deploying)
 
