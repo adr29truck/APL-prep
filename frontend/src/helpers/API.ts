@@ -14,12 +14,8 @@ const axiosConfig: AxiosRequestConfig = {
     'content-Type': 'application/json',
     Accept: '/',
     'Cache-Control': 'no-cache',
-    // Authorization: localStorage.getItem('jwt'),
-    // FIXME: IM BROKEN
-    Authorization:
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTEyMzk0NjUsImV4cCI6MTYxMTMyNTg2NSwianRpIjoiYjJhNDY5YTItZGE1My00MGM1LWExNDYtMDg1ZTIxNzBkOTYwIiwiaWQiOjEsInJscyI6IiIsInJmX2V4cCI6MTYxMzgzMTQ2NX0.s702zGzynnTmyBgc0VzB6HJvccIRPMrH75pQ0YcR0fY',
+    Authorization: localStorage.getItem('jwt'),
   },
-  // credentials: 'true',
 };
 
 /**
