@@ -31,9 +31,12 @@ export default (state = initialState, action: AuthActionTypes) => {
       const temp = new Date(state.currentTime.valueOf() + 86_400_000);
       const temp2 = new Date();
       if (
-        temp.getFullYear() <= temp2.getFullYear() &&
-        temp.getDate() <= temp2.getDate() &&
-        temp.getMonth() <= temp2.getMonth()
+        temp.getFullYear() < temp2.getFullYear() ||
+        (temp.getFullYear() === temp2.getFullYear() &&
+          temp.getMonth() < temp2.getMonth()) ||
+        (temp.getFullYear() === temp2.getFullYear() &&
+          temp.getMonth() === temp2.getMonth() &&
+          temp.getDate() <= temp2.getDate())
       ) {
         return {
           ...state,
