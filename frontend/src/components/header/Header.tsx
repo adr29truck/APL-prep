@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <Fragment>
-      <header>
+      <header className="center">
         <ArrowLeftIcon onClick={onClickLeftArrow} />
         <h3 className="text-center">Timeline</h3>
         <ArrowRightIcon onClick={onClickRightArrow} />
