@@ -40,10 +40,14 @@ jobs:
           cd backend
           pip install -r requirements.txt
       - name: Configuring database
+        env:
+          HOST: localhost
         run: |
           cd backend
           python seeder.py
       - name: Running tests
+        env:
+          HOST: localhost
         run: |
           cd backend
           coverage run -m pytest -vv
