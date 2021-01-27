@@ -34,9 +34,26 @@ def test_login(client):
 
 def test_activity_fetch(client):
     """Validates activity retrival"""
-    rv = client.get(
-        "/times/2021-01-02", headers = header)
+    rv = client.get("/times/2021-01-02", headers=header)
     x = json.loads(rv.data)
-    assert x[0] == {"activity_id": None, 'color': None, 'id': 1, 'name': '2021-01-02T0', 'user_id': 1}
-    assert x[12] == {"activity_id": None, 'color': None, 'id': 13, 'name': '2021-01-02T12', 'user_id': 1}
-    assert x[23] == {"activity_id": None, 'color': None, 'id': 24, 'name': '2021-01-02T23', 'user_id': 1}
+    assert x[0] == {
+        "activity_id": None,
+        "color": None,
+        "id": 1,
+        "name": "2021-01-02T0",
+        "user_id": 1,
+    }
+    assert x[12] == {
+        "activity_id": None,
+        "color": None,
+        "id": 13,
+        "name": "2021-01-02T12",
+        "user_id": 1,
+    }
+    assert x[23] == {
+        "activity_id": None,
+        "color": None,
+        "id": 24,
+        "name": "2021-01-02T23",
+        "user_id": 1,
+    }
