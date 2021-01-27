@@ -2,7 +2,8 @@
 
 The effective adventure
 
-![Python Lint](https://github.com/adr29truck/APL-prep/workflows/Lint/badge.svg)
+![Lint](https://github.com/adr29truck/APL-prep/workflows/Lint/badge.svg)
+![Unit](https://github.com/adr29truck/APL-prep/workflows/Unit/badge.svg)
 
 ## Table of Contents
 
@@ -16,7 +17,7 @@ The effective adventure
       - [Non Docker installation](#non-docker-installation)
     - [Running](#running)
       - [Using Docker](#using-docker)
-      - [Not using Docker](#not-using-docker)
+      - [Without docker*](#without-docker)
   - [Usage](#usage)
   - [Deploying](#deploying)
 
@@ -82,7 +83,7 @@ yarn install
 ```
 
 Backend:
-I recommend using python's virtual environment for installing ease of use.
+I recommend using python's virtual environment for installation and ease of use.
 
 ```console
 python3 -m venv venv
@@ -94,13 +95,13 @@ pip3 install -r requirements.txt
 
 #### Using Docker
 
+Requires the installation instructions for docker to have been followed.
+
 ```console
 docker-compose up
 ```
 
-Requires the installation instructions for docker to have been followed.
-
-#### Not using Docker
+#### Without docker*
 
 Frontend:
 
@@ -108,7 +109,7 @@ Frontend:
 yarn start
 ```
 
-database:
+Database:
 
 ```console
 docker run --rm --name pg-docker -e POSTGRES_PASSWORD=docker -d -p 5432:5432 postgres
