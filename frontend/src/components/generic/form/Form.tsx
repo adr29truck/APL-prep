@@ -17,7 +17,7 @@ interface Props {
 
 const Form = ({ fields, onSubmit }: Props) => {
   const fieldsJsx = fields.map((field) => (
-    <div>
+    <div key={`form_key${field.name}`}>
       <InputLabel htmlFor={`input_field_${field.name}`}>
         {capitalize(field.name)}
       </InputLabel>
