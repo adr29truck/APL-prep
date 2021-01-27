@@ -8,7 +8,12 @@ import { TestHelper } from '../../helpers/testHelper';
 
 describe('<MyComponent />', () => {
   it('renders one <Form /> components', () => {
-    const wrapper = mount(<TestHelper> <LoginForm /> </TestHelper>);
+    const wrapper = mount(
+      <TestHelper>
+        {' '}
+        <LoginForm />{' '}
+      </TestHelper>
+    );
     expect(wrapper.find(Form)).to.have.lengthOf(1);
   });
 });

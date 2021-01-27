@@ -1,9 +1,3 @@
-interface XY {
-  date?: string;
-  name?: string;
-  times?: any[];
-}
-
 export interface AuthActionTypes {
   payload?: any;
   type: string;

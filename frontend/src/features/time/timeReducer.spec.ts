@@ -122,7 +122,8 @@ describe('features > counter > ActivityReducer', () => {
   });
 
   it(`Increases currentTime, if time/increaseTime action is provided, -120 days`, () => {
-    const temp = new Date('2021-01-27T11:01:58.135Z').valueOf() - 86_400_000 * 120;
+    const temp =
+      new Date('2021-01-27T11:01:58.135Z').valueOf() - 86_400_000 * 120;
     const date = new Date(temp);
     const initialState = {
       times: [],
@@ -183,7 +184,8 @@ describe('features > counter > ActivityReducer', () => {
   });
 
   it(`Reduce currentTime, if time/reduceTime action is provided, -120 days`, () => {
-    const temp = new Date('2021-01-27T11:01:58.135Z').valueOf() - 86_400_000 * 120;
+    const temp =
+      new Date('2021-01-27T11:01:58.135Z').valueOf() - 86_400_000 * 120;
     const date = new Date(temp);
     const initialState = {
       times: [],
