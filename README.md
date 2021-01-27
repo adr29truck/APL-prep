@@ -7,6 +7,7 @@ The effective adventure
 [![DeepScan grade](https://deepscan.io/api/teams/12666/projects/15706/branches/317669/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12666&pid=15706&bid=317669)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/adr29truck/APL-prep.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adr29truck/APL-prep/context:javascript)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/adr29truck/APL-prep.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adr29truck/APL-prep/alerts/)
+[![Test Coverage Frontend](https://api.codeclimate.com/v1/badges/02362a268188d962d77d/test_coverage)](https://codeclimate.com/github/adr29truck/APL-prep/test_coverage)
 
 ## Table of Contents
 
