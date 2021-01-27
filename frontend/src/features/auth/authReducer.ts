@@ -44,6 +44,9 @@ export default (state = initialState, action: AuthActionTypes) => {
       signIn(action.payload);
       return { ...state, loading: true };
     }
+    case 'auth/signOut': {
+      return { ...state, id: 0 };
+    }
     case 'auth/setJWT': {
       return { ...state, jwt: action.payload };
     }

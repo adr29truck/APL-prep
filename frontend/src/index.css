@@ -13,6 +13,10 @@ input, label {
   color: #ffffff !important;
 }
 
+.navbar {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+}
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -1,20 +1,32 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-export const Navbar: React.FC = () => (
-  <nav>
-    <div className="nav-wrapper cyan darken-1 px1">
-      <NavLink to="/" className="brand-logo">
-        Redux + TypeScript
-      </NavLink>
-      <ul className="right hide-on-med-and-down">
-        <li cy-data="home-nav-link">
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/about">About</NavLink>
-        </li>
-      </ul>
-    </div>
-  </nav>
-);
+import { getUser } from '../features/auth/selectors';
+
+export const Navbar: React.FC = () => {
+  const user = useSelector(getUser);
+
+  return (
+    <nav>
+      <div className="navbar">
+        <NavLink to="/" className="brand-logo">
+          SOME LOGO
+        </NavLink>
+        <ul className="">
+          <li cy-data="">
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to={user.id === 0 ? '/login' : '/logout'}>
+              {user.id === 0 ? 'Login' : 'Logout'}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
