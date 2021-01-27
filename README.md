@@ -4,6 +4,9 @@ The effective adventure
 
 ![Lint](https://github.com/adr29truck/APL-prep/workflows/Lint/badge.svg)
 ![Unit](https://github.com/adr29truck/APL-prep/workflows/Unit/badge.svg)
+[![DeepScan grade](https://deepscan.io/api/teams/12666/projects/15706/branches/317669/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12666&pid=15706&bid=317669)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/adr29truck/APL-prep.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adr29truck/APL-prep/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/adr29truck/APL-prep.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/adr29truck/APL-prep/alerts/)
 
 ## Table of Contents
 
