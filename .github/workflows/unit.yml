@@ -1,0 +1,20 @@
+name: Unit
+
+on: [push, pull_request]
+
+jobs:
+  frontend_unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install packages
+        run: |
+          cd frontend
+          yarn install
+      - name: Run unit tests
+        run: |
+          cd frontend
+          yarn test
