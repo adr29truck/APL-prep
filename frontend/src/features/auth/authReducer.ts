@@ -35,6 +35,7 @@ async function signIn(payload: object) {
 const initialState = {
   id: 0,
   loading: false,
+  jwt: '',
 };
 
 export default (state = initialState, action: AuthActionTypes) => {
@@ -49,7 +50,7 @@ export default (state = initialState, action: AuthActionTypes) => {
     case 'auth/setState': {
       return {
         ...state,
-        id: action.payload.id,
+        id: action.payload.id as number,
         loading: false,
       };
     }

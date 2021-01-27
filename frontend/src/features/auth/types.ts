@@ -1,15 +1,12 @@
-interface XY {
-  id: number;
-}
-
 export interface AuthActionTypes {
-  payload: XY;
+  payload: any;
   type: string;
 }
 
 export interface SystemState {
   id: number;
   name: string;
+  jwt: string;
 }
 
 export interface SystemStateO {
