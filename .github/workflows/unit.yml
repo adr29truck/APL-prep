@@ -39,6 +39,10 @@ jobs:
         run: |
           cd backend
           pip install -r requirements.txt
+      - name: Configuring database
+        run: |
+          cd backend
+          python seeder.py
       - name: Running tests
         run: |
           cd backend
