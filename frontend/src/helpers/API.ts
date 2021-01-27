@@ -9,13 +9,15 @@ const baseUrl = () => {
   }
 };
 
-const axiosConfig: AxiosRequestConfig = {
-  headers: {
-    'content-Type': 'application/json',
-    Accept: '/',
-    'Cache-Control': 'no-cache',
-    Authorization: localStorage.getItem('jwt'),
-  },
+const axiosConfig = (): AxiosRequestConfig => {
+  return {
+    headers: {
+      'content-Type': 'application/json',
+      Accept: '/',
+      'Cache-Control': 'no-cache',
+      Authorization: localStorage.getItem('jwt'),
+    },
+  };
 };
 
 /**
@@ -29,7 +31,7 @@ export default class API {
    */
   static get(route: string) {
     return axios
-      .get(baseUrl() + route, axiosConfig)
+      .get(baseUrl() + route, axiosConfig())
       .then((res: AxiosResponse) => {
         return res.data;
       })
@@ -46,7 +48,7 @@ export default class API {
    */
   static post(route: string, data: object) {
     return axios
-      .post(baseUrl() + route, data, axiosConfig)
+      .post(baseUrl() + route, data, axiosConfig())
       .then((res: AxiosResponse) => {
         return res.data;
       })
