@@ -9,4 +9,4 @@ COPY . .
 RUN ls -a
 ENV host=host.docker.internal
 
-CMD ["python" "flask" "run" "-p" "5000" "--host=0.0.0.0"]
+CMD ["gunicorn" "-t" "150" "app:app" "--bind" "0.0.0.0:5000"]
