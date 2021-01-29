@@ -144,7 +144,7 @@ describe('features > counter > ActivityReducer', () => {
   });
 
   it(`Don't increases currentTime, if time/increaseTime action is provided and increase is beyond today`, () => {
-    const date = new Date('2021-01-27T11:01:58.135Z');
+    const date = new Date();
     const initialState = {
       times: [],
       currentTime: date,
