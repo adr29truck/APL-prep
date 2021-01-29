@@ -68,6 +68,7 @@ def require_authentication(method):
 def my_index():
     return flask.render_template("index.html", flask_token="Hello   world")
 
+
 # Set up some routes for the example
 @app.route("/api/")
 def home():
@@ -192,9 +193,15 @@ def activity():
     temp = flask.request.headers.get("Authorization")
     user_id = guard.extract_jwt_token(temp)["id"]
     if flask.request.method == "GET":
-        # TODO: Fetch all activities related to the signed-in user and from user 0
         return flask.jsonify(
-            [t.serialize for t in Activity.query.order_by(Activity.id).all()]
+            [
+                t.serialize
+                for t in Activity.query.filter(
+                    Activity.user_id == user_id or Activity.user_id == 0
+                )
+                .order_by(Activity.id)
+                .all()
+            ]
         )
     elif flask.request.method == "POST":
         try:
