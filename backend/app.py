@@ -64,6 +64,10 @@ def require_authentication(method):
     return authenticate
 
 
+@app.route("/")
+def my_index():
+    return flask.render_template("index.html", flask_token="Hello   world")
+
 # Set up some routes for the example
 @app.route("/api/")
 def home():
