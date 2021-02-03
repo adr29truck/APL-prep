@@ -40,7 +40,7 @@ def create_tables():
         db.Column("username", db.String(50), nullable=False, unique=True),
         db.Column("password", db.Binary(), nullable=False),
         db.Column("salt", db.Binary(), nullable=False),
-        db.Column('is_authenticated', db.Boolean(), nullable=False, default=False),
+        db.Column("is_authenticated", db.Boolean(), nullable=False, default=False),
     )
 
     metadata.create_all(engine)

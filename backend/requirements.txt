@@ -33,3 +33,4 @@ wcwidth==0.2.5
 Werkzeug==1.0.1
 coverage
 gunicorn==20.0.4
+alembic
