@@ -40,6 +40,7 @@ def create_tables():
         db.Column("username", db.String(50), nullable=False, unique=True),
         db.Column("password", db.Binary(), nullable=False),
         db.Column("salt", db.Binary(), nullable=False),
+        db.Column('is_authenticated', db.Boolean(), nullable=False, default=False),
     )
 
     metadata.create_all(engine)
@@ -71,7 +72,7 @@ def populate_tables():
     session.commit()
 
     password, salt = User.hash_password("admin")
-    new_user = User(name="Admin", username="admin", password=password, salt=salt)
+    new_user = User(name="Admin", username="admin", password=password, salt=salt, is_authenticated=False)
     session.add(new_user)
     session.commit()
     print("Done populating")

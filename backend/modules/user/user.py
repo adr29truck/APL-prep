@@ -14,6 +14,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True)
     password = db.Column(db.Binary(255))
     salt = db.Column(db.Binary())
+    is_authenticated = db.Column(db.Boolean())
 
     # Flask_praetorian methods
     @property
@@ -67,10 +68,11 @@ class User(db.Model):
         return True if new_key == self.password else False
 
     def __repr__(self):
-        return "<User(name='%s', id='%s', username='%s', password='%a', salt='%s')>" % (
+        return "<User(name='%s', id='%s', username='%s', password='%a', salt='%s', is_authenticated='%s')>" % (
             self.name,
             self.id,
             self.username,
             self.password,
             self.salt,
+            self.is_authenticated
         )
