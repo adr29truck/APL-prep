@@ -2,7 +2,6 @@ import { AuthActionTypes } from './types';
 import { getDayAsString } from '../../helpers/time';
 import { fetchTimes } from '../../helpers/times';
 
-
 const initialState = { times: <any[]>[], currentTime: new Date() };
 
 export default (state = initialState, action: AuthActionTypes) => {
