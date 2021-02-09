@@ -1,23 +1,7 @@
 import { AuthActionTypes } from './types';
-import API from '../../helpers/API';
 import { getDayAsString } from '../../helpers/time';
-import store from '../../store';
+import { fetchTimes } from '../../helpers/times';
 
-// TODO: Extract me to a module
-async function fetchTimes(date: string) {
-  const temp: any[] = await API.get(`times/${date}`);
-  // eslint-disable-next-line no-restricted-syntax
-  for (const x of temp) {
-    // eslint-disable-next-line prefer-destructuring
-    x.label = x.name.split('T')[1];
-    x.label = x.label.length === 1 ? `0${x.label}` : x.label;
-    x.isChecked = false;
-    if (x.color != null) {
-      x.style = { color: x.color };
-    }
-  }
-  store.dispatch({ type: 'time/setTimesState', payload: { times: temp } });
-}
 
 const initialState = { times: <any[]>[], currentTime: new Date() };
 
