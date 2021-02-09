@@ -10,8 +10,7 @@ describe('<MyComponent />', () => {
   it('renders one <Form /> components', () => {
     const wrapper = mount(
       <TestHelper>
-        {' '}
-        <LoginForm />{' '}
+        <LoginForm />
       </TestHelper>
     );
     expect(wrapper.find(Form)).to.have.lengthOf(1);
