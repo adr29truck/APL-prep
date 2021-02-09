@@ -72,7 +72,13 @@ def populate_tables():
     session.commit()
 
     password, salt = User.hash_password("admin")
-    new_user = User(name="Admin", username="admin", password=password, salt=salt, is_authenticated=False)
+    new_user = User(
+        name="Admin",
+        username="admin",
+        password=password,
+        salt=salt,
+        is_authenticated=False,
+    )
     session.add(new_user)
     session.commit()
     print("Done populating")

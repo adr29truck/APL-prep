@@ -6,7 +6,7 @@ import API from './API';
  * @param {*} token - x
  * @return {Object} - data
  */
-function parseJwt(token: string) {
+export function parseJwt(token: string) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(
@@ -21,10 +21,11 @@ function parseJwt(token: string) {
 }
 
 export async function signIn(payload: object) {
-  const token = await API.post('api/login', payload);
-  localStorage.removeItem('jwt');
-  localStorage.setItem('jwt', token.access_token);
-  const temp = parseJwt(token.access_token);
-  store.dispatch({ type: 'auth/setJWT', payload: token.access_token });
+  const temp = await API.post('api/login', payload);
   store.dispatch({ type: 'auth/setState', payload: temp });
+}
+
+export async function signOut() {
+  await API.post('api/logout');
+  store.dispatch({ type: 'auth/setState', payload: { id: 0 } });
 }

@@ -8,7 +8,7 @@ from app import app
 
 from db.seed import seed
 
-header = {"Authorization": ""}
+COOKIE = ".eJwlzsENwzAIAMBd_O4DbMAmy0RgsNJv0ryq7t5KvQnuXfZ15nWU7XXe-Sj7M8pWAGoIjdErL6xdWYg9zA2bSTN11YoeYIYS2RWmhCpZxcF9kVCrTTnD6kpzXAQBRGI0RQlmD1zMTiM6rGQ3UXQ0G5NhgqKUX-S-8vxvsHy-Zu8ulw.YCKMGg.GJbOTrCuJ5zhgvuh0QVNfQg-X2w"
 
 
 @pytest.fixture
@@ -26,15 +26,18 @@ def test_login(client):
     rv = client.post(
         "/api/login", data=json.dumps({"username": "admin", "password": "admin"})
     )
-    assert b"access_token" in rv.data
+    COOKIE = rv.headers.getlist("Set-Cookie")[0]
+
+    assert "session=" in COOKIE
+    assert b"id" in rv.data
     x = json.loads(rv.data)
-    header["Authorization"] = x["access_token"]
-    assert header["Authorization"] is not None
+    assert x["id"] is not None
 
 
 def test_activity_fetch(client):
     """Validates activity retrival"""
-    rv = client.get("/times/2021-01-02", headers=header)
+    client.set_cookie("localhost", "session", COOKIE)
+    rv = client.get("/times/2021-01-02")
     x = json.loads(rv.data)
     assert x[0] == {
         "activity_id": None,

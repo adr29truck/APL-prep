@@ -20,6 +20,8 @@ const axiosConfig = (): AxiosRequestConfig => {
   };
 };
 
+axios.defaults.withCredentials = true;
+
 /**
  * Represents everythin API related
  */
@@ -46,7 +48,7 @@ export default class API {
    * @param {object} data - data to pass to the API
    * @return {object} JSON response from API request
    */
-  static post(route: string, data: object) {
+  static post(route: string, data: object = {}) {
     return axios
       .post(baseUrl() + route, data, axiosConfig())
       .then((res: AxiosResponse) => {

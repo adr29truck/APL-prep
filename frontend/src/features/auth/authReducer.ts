@@ -1,5 +1,5 @@
 import { AuthActionTypes } from './types';
-import { signIn } from '../../helpers/auth';
+import { signIn, signOut } from '../../helpers/auth';
 
 const initialState = {
   id: 0,
@@ -14,7 +14,8 @@ export default (state = initialState, action: AuthActionTypes) => {
       return { ...state, loading: true };
     }
     case 'auth/signOut': {
-      return { ...state, id: 0 };
+      signOut();
+      return { ...state };
     }
     case 'auth/setJWT': {
       return { ...state, jwt: action.payload };

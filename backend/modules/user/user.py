@@ -1,6 +1,7 @@
 import flask_sqlalchemy
 import hashlib
 import os
+from numpy.compat import unicode
 
 db = flask_sqlalchemy.SQLAlchemy()
 
@@ -15,26 +16,28 @@ class User(db.Model):
     password = db.Column(db.Binary(255))
     salt = db.Column(db.Binary())
     is_authenticated = db.Column(db.Boolean())
+    is_active = True
+    is_anonymous = False
 
-    # Flask_praetorian methods
-    @property
-    def rolenames(self):
-        try:
-            return self.roles.split(",")
-        except Exception:
-            return []
+    def get_id(self):
+        return unicode(self.id)
+
+    def commit(self):
+        User.query.filter_by(id=self.id).update(
+            {
+                "username": self.username,
+                "name": self.name,
+                "password": self.password,
+                "salt": self.salt,
+                "is_authenticated": self.is_authenticated,
+            }
+        )
+        db.session.commit()
 
     @classmethod
     def lookup(cls, username):
+        print(username, " USER MODULE")
         return cls.query.filter_by(username=username).one_or_none()
-
-    @classmethod
-    def identify(cls, id):
-        return cls.quer.get(id)
-
-    @property
-    def identity(self):
-        return self.id
 
     @property
     def serialize(self):
@@ -74,5 +77,5 @@ class User(db.Model):
             self.username,
             self.password,
             self.salt,
-            self.is_authenticated
+            self.is_authenticated,
         )
