@@ -1,7 +1,6 @@
 import flask
 import flask_sqlalchemy
 import flask_cors
-from functools import wraps
 from datetime import datetime
 from flask_login import (
     LoginManager,
@@ -171,7 +170,6 @@ def times_user_date(time):
 @app.route("/activities", methods=["GET", "POST"])
 @login_required
 def activity():
-    temp = flask.request.headers.get("Authorization")
     user_id = current_user.id
     if flask.request.method == "GET":
         return flask.jsonify(
