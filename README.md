@@ -67,12 +67,14 @@ docker-compose up
 To create the correct database you are also required to run
 
 ```console
+docker-compose exec backend alembic upgrade head
 docker-compose exec backend python seeder.py
 ```
 
 or if the container is not currently running.
 
 ```console
+docker-compose run backend alembic upgrade head
 docker-compose run backend python seeder.py
 ```
 
