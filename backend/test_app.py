@@ -70,9 +70,11 @@ def test_activity_fetch(client):
     assert x[0] == {"color": "lightgrey", "id": 1, "name": "Sleep", "user_id": 0}
     assert x[1] == {"color": "#2196f3", "id": 2, "name": "Work - Meeting", "user_id": 0}
     assert x[2] == {"color": "#03a9f4", "id": 3, "name": "Work - Coding", "user_id": 0}
+    assert x[3] == {"color": "lightblue", "id": 4, "name": "Coding", "user_id": 0}
     assert x[6] == {
         "color": "peachpuff",
         "id": 7,
         "name": "Entertainment",
         "user_id": 0,
     }
+    assert x[9] == {"color": "yellow", "id": 10, "name": "Socialization", "user_id": 0}
