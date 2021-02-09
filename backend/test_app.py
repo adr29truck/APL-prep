@@ -34,7 +34,7 @@ def test_login(client):
     assert x["id"] is not None
 
 
-def test_activity_fetch(client):
+def test_times_fetch(client):
     """Validates activity retrival"""
     client.set_cookie("localhost", "session", COOKIE)
     rv = client.get("/times/2021-01-02")
@@ -59,4 +59,20 @@ def test_activity_fetch(client):
         "id": 24,
         "name": "2021-01-02T23",
         "user_id": 1,
+    }
+
+
+def test_activity_fetch(client):
+    """Validates activity retrival"""
+    client.set_cookie("localhost", "session", COOKIE)
+    rv = client.get("/activities")
+    x = json.loads(rv.data)
+    assert x[0] == {"color": "lightgrey", "id": 1, "name": "Sleep", "user_id": 0}
+    assert x[1] == {"color": "#2196f3", "id": 2, "name": "Work - Meeting", "user_id": 0}
+    assert x[2] == {"color": "#03a9f4", "id": 3, "name": "Work - Coding", "user_id": 0}
+    assert x[6] == {
+        "color": "peachpuff",
+        "id": 7,
+        "name": "Entertainment",
+        "user_id": 0,
     }
