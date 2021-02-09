@@ -26,10 +26,9 @@ def test_login(client):
     rv = client.post(
         "/api/login", data=json.dumps({"username": "admin", "password": "admin"})
     )
-    assert b"access_token" in rv.data
+    assert b"id" in rv.data
     x = json.loads(rv.data)
-    header["Authorization"] = x["access_token"]
-    assert header["Authorization"] is not None
+    assert x["id"] is not None
 
 
 def test_activity_fetch(client):

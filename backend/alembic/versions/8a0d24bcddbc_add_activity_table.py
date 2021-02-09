@@ -19,9 +19,9 @@ depends_on = None
 def upgrade():
     op.create_table(
         "activities",
-        sa.Column("id", sa.Integer, primary_key=True),
+        sa.Column("id", sa.Integer(), primary_key=True),
         sa.Column("name", sa.String(50), nullable=False),
-        sa.Column("user_id", sa.Integer),
+        sa.Column("user_id", sa.Integer()),
         sa.Column("color", sa.String(50)),
     )
 

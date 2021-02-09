@@ -1,9 +1,15 @@
 import flask
 import flask_sqlalchemy
-import flask_praetorian
 import flask_cors
 from functools import wraps
 from datetime import datetime
+from flask_login import (
+    LoginManager,
+    login_user,
+    logout_user,
+    login_required,
+    current_user,
+)
 
 # Our imports
 from modules.time_ import TimeBase as Time
@@ -13,8 +19,9 @@ from modules.user import User
 # Import constants
 import const
 
+login_manager = LoginManager()
+
 db = flask_sqlalchemy.SQLAlchemy()
-guard = flask_praetorian.Praetorian()
 cors = flask_cors.CORS()
 
 
@@ -24,55 +31,41 @@ app.debug = True
 app.config["SECRET_KEY"] = "top secret"
 app.config["JWT_ACCESS_LIFESPAN"] = {"hours": 24}
 app.config["JWT_REFRESH_LIFESPAN"] = {"days": 30}
+app.secret_key = (
+    b"\xd1\xe6\xfd\xdf\xdfdnnw\x87\x1c\x98\xec\x87*E"  # FIXME: HIDE ME! TODO:
+)
 
-# Initialize the flask-praetorian instance for the app
-guard.init_app(app, User)
 # Configure the PG database connection
 app.config["SQLALCHEMY_DATABASE_URI"] = const.DB_CONNECTION_STRING
 db.init_app(app)
-# Initializes CORS so that the api_tool can talk to the example app
+# Initializes CORS so that the frontend can talk to the app
 cors.init_app(app)
+login_manager.init_app(app)
 
 
-def require_authentication(method):
-    """
-    Verifies that the request has a valid authorization token
-    othervise status 401 is returned.
-
-    Args:
-        method (function): The decorated function
-
-    Returns:
-        http Response: Http response provided by method if authorized else 401
-    """
-
-    @wraps(method)
-    def authenticate(*args, **kwargs):
-        temp = flask.request.headers.get("Authorization")
-        # TODO: Check that the token has not expired
-        # print(guard.extract_jwt_token(temp)['exp'])
-        try:
-            user_id = guard.extract_jwt_token(temp)["id"]
-            print("USER ID: ", user_id)
-            if user_id == None:
-                flask.abort(401)
-        except:
-            flask.abort(401)
-        finally:
-            return method(*args, **kwargs)
-
-    return authenticate
+@login_manager.user_loader
+def load_user(user_id):
+    try:
+        x = User.query.get(int(user_id))
+        return x
+    except:
+        return None
 
 
 @app.route("/")
 def my_index():
-    return flask.render_template("index.html", flask_token="Hello   world")
+    return flask.render_template("index.html")
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return flask.render_template("index.html")
 
 
 # Set up some routes for the example
 @app.route("/api/")
 def home():
-    return {"Hello": "World"}, 200
+    return {"Hello"}, 200
 
 
 @app.route("/api/login", methods=["POST"])
@@ -90,28 +83,29 @@ def login():
     try:
         user = User.lookup(username)
         if user.authenticate(password):
-            ret = {"access_token": guard.encode_jwt_token(user)}
-            return ret, 200
+            user.is_authenticated = True  # TODO: Change to true after email validated
+            print(login_user(user))
+            user.commit()
+            return {"id": user.id}, 200
         else:
             return ("bad", 401)
     except:
         return ("bad", 401)
 
 
-@app.route("/api/refresh", methods=["POST"])
-def refresh():
+@app.route("/api/logout", methods=["POST"])
+@login_required
+def logout():
     """
-    Refreshes an existing JWT by creating a new one that is a copy of the old
-    except that it has a refrehsed access expiration.
+    Logs a user out by handling a POST request
     .. example::
-       $ curl http://localhost:5000/api/refresh -X GET \
-         -H "Authorization: Bearer <your_token>"
+       $ curl http://localhost:5000/api/logout -X POST
     """
-    print("refresh request")
-    old_token = request.get_data()
-    new_token = guard.refresh_jwt_token(old_token)
-    ret = {"access_token": new_token}
-    return ret, 200
+    try:
+        print(logout_user())
+        return "OK", 200
+    except:
+        return ("bad", 400)
 
 
 @app.route("/api/register", methods=["POST"])
@@ -124,31 +118,17 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
+        db.session.close()
+
         return flask.jsonify(new_user.serialize)
     except:
         return ("Bad", 400)
 
 
-@app.route("/api/protected")
-@flask_praetorian.auth_required
-def protected():
-    """
-    A protected endpoint. The auth_required decorator will require a header
-    containing a valid JWT
-    .. example::
-       $ curl http://localhost:5000/api/protected -X GET \
-         -H "Authorization: Bearer <your_token>"
-    """
-    return {
-        "message": f"protected endpoint (allowed user {flask_praetorian.current_user().username})"
-    }
-
-
 @app.route("/times/<time>", methods=["GET", "POST"])
-@require_authentication
+@login_required
 def times_user_date(time):
-    temp = flask.request.headers.get("Authorization")
-    user_id = guard.extract_jwt_token(temp)["id"]
+    user_id = current_user.id
     if flask.request.method == "GET":
         activities = Activity.query.all()
         temp = (
@@ -181,6 +161,7 @@ def times_user_date(time):
             )
             temp = Time.query.filter(Time.id == data["id"]).one()
             db.session.commit()
+            db.session.close()
 
             return flask.jsonify(temp.serialize)
         except:
@@ -188,10 +169,10 @@ def times_user_date(time):
 
 
 @app.route("/activities", methods=["GET", "POST"])
-@require_authentication
+@login_required
 def activity():
     temp = flask.request.headers.get("Authorization")
-    user_id = guard.extract_jwt_token(temp)["id"]
+    user_id = current_user.id
     if flask.request.method == "GET":
         return flask.jsonify(
             [
@@ -209,6 +190,8 @@ def activity():
             new_activity = Activity(name=data["name"], user_id=user_id)
             db.session.add(new_activity)
             db.session.commit()
+            db.session.close()
+
             return flask.jsonify(new_activity.serialize)
         except:
             return ("Bad", 400)
@@ -232,6 +215,7 @@ def generate_times_in_db(date):
         db.session.add(new_time)
         i += 1
     db.session.commit()
+    db.session.close()
 
 
 # def dump_datetime(value):
