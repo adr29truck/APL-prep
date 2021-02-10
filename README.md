@@ -23,6 +23,8 @@ The effective adventure
       - [Using Docker](#using-docker)
       - [Without docker*](#without-docker)
   - [Usage](#usage)
+  - [Develop](#develop)
+    - [Testing](#testing)
   - [Deploying](#deploying)
 
 ## About
@@ -136,6 +138,25 @@ Example curl for retriving a JWT token / signing in
 ```bash
 curl http://localhost:5000/api/login -X POST \
          -d '{"username":"admin", "password":"admin"}'
+```
+
+## Develop
+
+### Testing
+
+All the unit tests for the frontend can be run using
+`yarn test` or `yarn test:coverage` for an additional coveragereport.
+
+For running unit tests in the backend you can use
+
+```console
+docker-compose exec backend pytest -s -vv
+```
+
+or for a coverage report run
+
+```console
+docker-compose exec backend coverage run -m pytest -s -vv && coverage report
 ```
 
 ## Deploying
