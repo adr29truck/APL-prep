@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<About /> renders correctly 1`] = `"<h1>About</h1><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas possimus doloribus error cumque autem asperiores, ullam deserunt quidem omnis doloremque itaque eius eaque sint facilis unde tenetur reiciendis aliquam soluta?</p><button type=\\"button\\" class=\\"btn\\" cy-data=\\"go-back-button\\">Go back</button>"`;
