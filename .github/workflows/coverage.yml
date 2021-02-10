@@ -2,6 +2,8 @@ name: TestCoverage
 
 on:
   push:
+    branch:
+    - master
   schedule:
   - cron: "0 0 * * *"
 
@@ -69,7 +71,7 @@ jobs:
     - name: Combine coverage for codeclimate
       run: |
         ls coverage
-        ./cc-test-reporter sum-coverage -p 2 coverage/**.*.json
+        ./cc-test-reporter sum-coverage -p 2 coverage/backend.json coverage/frontend.json
     - name: Upload coverage report to codeclimate
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
