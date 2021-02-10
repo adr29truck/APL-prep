@@ -1,10 +1,4 @@
-import API from '../../helpers/API';
-import store from '../../store';
-
-async function fetchActivities() {
-  const temp = await API.get('activities');
-  store.dispatch({ type: 'activity/setActivitiesState', payload: temp });
-}
+import { fetchActivities } from '../../helpers/activity';
 
 const initialState = {
   activities: [{ id: -1, name: '-' }],
