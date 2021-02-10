@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Navbar /> renders correctly 1`] = `"<nav><div class=\\"navbar\\"><a aria-current=\\"page\\" class=\\"brand-logo active\\" href=\\"/\\">SOME LOGO</a><ul class=\\"\\"><li cy-data=\\"\\"><a aria-current=\\"page\\" class=\\"active\\" href=\\"/\\">Home</a></li><li><a href=\\"/login\\">Login</a></li><li><a href=\\"/about\\">About</a></li></ul></div></nav>"`;
