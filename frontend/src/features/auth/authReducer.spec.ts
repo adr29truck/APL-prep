@@ -22,19 +22,21 @@ describe('features > auth > authReducer', () => {
     expect(authReducer(initialState, action)).toEqual(expectedState);
   });
 
-  // it(`increments value, if ${DECREMENT_COUNTER} action is provided`, () => {
-  //   const initialState = {
-  //     value: 0,
-  //   };
+  it(`Calls signout`, () => {
+    const initialState = {
+      id: 1,
+      loading: false,
+    };
 
-  //   const expectedState = {
-  //     value: -1,
-  //   };
+    const expectedState = {
+      id: 1,
+      loading: false,
+    };
 
-  //   const action: CounterActionTypes = {
-  //     type: DECREMENT_COUNTER,
-  //   };
+    const action = {
+      type: 'auth/signout',
+    };
 
-  //   expect(counterReducer(initialState, action)).toEqual(expectedState);
-  // });
+    expect(authReducer(initialState, action)).toEqual(expectedState);
+  });
 });
