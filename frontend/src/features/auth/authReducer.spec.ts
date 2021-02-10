@@ -2,7 +2,7 @@
 import authReducer from './authReducer';
 // import { CounterActionTypes } from './types';
 
-describe('features > counter > counterReducer', () => {
+describe('features > auth > authReducer', () => {
   it(`sets state, if auth/setState action is provided`, () => {
     const initialState = {
       id: 0,

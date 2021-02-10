@@ -28,16 +28,15 @@ describe('<Header />', () => {
   });
 
   it('handles right click correctly', () => {
-    const temp = new Date()
-    const date = temp.getDate()
-    const today = date < 10 ? '0'+date : date
-    const tomorrow = date+1 < 10 ? '0'+date+1 : date+1
+    const temp = new Date();
+    const date = temp.getDate();
+    const today = date < 10 ? `0${date}` : date;
     render(
       <TestHelper>
         <Header />
       </TestHelper>
     );
-    expect(screen.getByText(today, {exact: false}))
+    expect(screen.getByText(today, { exact: false }));
     userEvent.click(screen.getByTestId('right-arrow'));
     userEvent.click(screen.getByTestId('left-arrow'));
   });
