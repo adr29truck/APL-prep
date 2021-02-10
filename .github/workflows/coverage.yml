@@ -1,13 +1,24 @@
 name: TestCoverage
 
 on:
+  push:
   schedule:
   - cron: "0 0 * * *"
 
 jobs:
   cc:
-    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    services: 
+      postgres:
+        image: postgres:13.1
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: docker
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-interval 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v2
     - name: Checkout master
@@ -23,13 +34,42 @@ jobs:
       run: |
         cd frontend
         yarn test --coverage --watchAll=false
-    - name: Generate formatted coverage for codeclimate
+    - uses: actions/setup-python@v2
+    - name: Installing dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+    - name: Configuring database
+      env:
+        host: localhost
+      run: |
+        cd backend
+        python seeder.py
+    - name: Running tests
+      env:
+        host: localhost
+      run: |
+        cd backend
+        coverage run -m pytest -s -vv 
+        coverage json
+        coverage xml
+    - name: Download codeclimate test-reporter
       run: |
         echo Fetch testreporter tool
-        cd frontend
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x cc-test-reporter
-        ./cc-test-reporter format-coverage -t lcov
+    - name: Generate formatted coverage for codeclimate - Frontend
+      run: |
+        cd frontend
+        ../cc-test-reporter format-coverage -t lcov
+    - name: Generate formatted coverage for codeclimate - Backend
+      run: |
+        cd backend
+        ../cc-test-reporter format-coverage -t coverage.py
+    - name: Combine coverage for codeclimate
+      run: |
+        cd backend
+        ../cc-test-reporter sum-coverage -p 2 coverage/**.*.json
     - name: Upload coverage report to codeclimate
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
