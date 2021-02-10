@@ -22,9 +22,9 @@ const Header = () => {
   return (
     <Fragment>
       <header className="center">
-        <ArrowLeftIcon onClick={onClickLeftArrow} />
+        <ArrowLeftIcon onClick={onClickLeftArrow} data-testid="left-arrow" />
         <h3 className="text-center">Timeline</h3>
-        <ArrowRightIcon onClick={onClickRightArrow} />
+        <ArrowRightIcon onClick={onClickRightArrow} data-testid="right-arrow" />
       </header>
       <Typography
         variant="h2"
