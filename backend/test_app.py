@@ -34,6 +34,22 @@ def test_login(client):
     assert x["id"] is not None
 
 
+def test_logout(client):
+    """Can sign out."""
+    client.set_cookie("localhost", "session", COOKIE)
+    rv = client.post("/api/logout")
+    assert "session=;" in rv.headers.getlist("Set-Cookie")[0]
+    assert rv.status == "200 OK"
+    assert rv.data == b"OK"
+
+
+def test_no_auth_logout(client):
+    """Can not sign out."""
+    rv = client.post("/api/logout")
+    assert rv.headers.getlist("Set-Cookie") == []
+    assert rv.status == "401 UNAUTHORIZED"
+
+
 def test_times_fetch(client):
     """Validates activity retrival"""
     client.set_cookie("localhost", "session", COOKIE)
