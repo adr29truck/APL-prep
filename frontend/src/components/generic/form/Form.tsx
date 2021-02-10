@@ -34,7 +34,7 @@ const Form = ({ fields, onSubmit }: Props) => {
   ));
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} name="form">
       {fieldsJsx}
       <button type="submit">Submit</button>
     </form>
