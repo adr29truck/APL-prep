@@ -10,7 +10,7 @@ import { TestHelper } from '../../helpers/testHelper';
 
 describe('<ActivityDropdown />', () => {
   it('renders correctly', () => {
-    const x = jest.fn()
+    const x = jest.fn();
 
     const wrapper = mount(
       <TestHelper>
@@ -22,7 +22,7 @@ describe('<ActivityDropdown />', () => {
   });
 
   it('handles right click correctly', () => {
-    const x = jest.fn()
+    const x = jest.fn();
 
     render(
       <TestHelper>
@@ -31,7 +31,7 @@ describe('<ActivityDropdown />', () => {
     );
 
     expect(screen.getByText('Submit', { exact: false }));
-    userEvent.click(screen.getByText('Submit', { exact: false }))
-    expect(x).toHaveBeenCalledTimes(1)
+    userEvent.click(screen.getByText('Submit', { exact: false }));
+    expect(x).toHaveBeenCalledTimes(1);
   });
 });
