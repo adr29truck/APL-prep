@@ -2,7 +2,7 @@ name: TestCoverage
 
 on:
   push:
-    branch:
+    branches:
     - master
   schedule:
   - cron: "0 0 * * *"
@@ -46,7 +46,7 @@ jobs:
         host: localhost
       run: |
         cd backend
-        alembic upgrade head
+        alembic upgrade head --config alembic-ci.ini
         python seeder.py -p
     - name: Running tests
       env:
