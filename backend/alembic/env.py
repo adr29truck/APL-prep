@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-import const
+import os
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -39,7 +39,9 @@ def run_migrations_offline():
     script output.
 
     """
-    url = const.DB_CONNECTION_STRING
+    url = (
+        f"postgresql+psycopg2://postgres:docker@{os.environ.get('host')}:5432/postgres"
+    )
     context.configure(
         url=url,
         target_metadata=target_metadata,
