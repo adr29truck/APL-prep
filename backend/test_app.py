@@ -52,6 +52,14 @@ def test_login(client):
     assert x["id"] is not None
 
 
+def test_api_home(client):
+    """Returns a welcome statement."""
+    rv = client.get("/api")
+
+    x = json.loads(rv.data)
+    assert x["Hello"] == "api"
+
+
 def test_logout(client):
     """Can sign out."""
     client.set_cookie("localhost", "session", COOKIE)
