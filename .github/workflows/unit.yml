@@ -42,6 +42,7 @@ jobs:
       - name: Configuring database
         env:
           host: localhost
+          ENV: CI
         run: |
           cd backend
           alembic upgrade head

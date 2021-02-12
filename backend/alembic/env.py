@@ -39,9 +39,10 @@ def run_migrations_offline():
     script output.
 
     """
-    url = (
-        f"postgresql+psycopg2://postgres:docker@{os.environ.get('host')}:5432/postgres"
-    )
+    if os.environ.get("ENV") == "CI":
+        url = f"postgresql+psycopg2://postgres:docker@localhost:5432/postgres"
+    else:
+        url = f"postgresql+psycopg2://postgres:docker@{os.environ.get('host')}:5432/postgres"
     context.configure(
         url=url,
         target_metadata=target_metadata,
