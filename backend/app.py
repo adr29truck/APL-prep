@@ -143,7 +143,8 @@ def times_user_date(time):
             ).all()
             count += 1
             if count > 3:
-                raise "Loop error"
+                print("Loop error")
+                return ("Loop error", 500)
         for q in temp:
             try:
                 q.color = list(filter(lambda z: z.id == q.activity_id, activities))[
