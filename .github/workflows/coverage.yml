@@ -46,7 +46,8 @@ jobs:
         host: localhost
       run: |
         cd backend
-        python seeder.py
+        alembic upgrade head
+        python seeder.py -p
     - name: Running tests
       env:
         host: localhost

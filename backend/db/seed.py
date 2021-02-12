@@ -5,7 +5,9 @@ import datetime
 import sqlalchemy as db
 from modules.activity.activity import Activity
 from modules.user import User
+from modules.time_ import TimeBase as Time
 import const
+
 
 engine = db.create_engine(const.DB_CONNECTION_STRING, echo=True)
 connection = engine.connect()
@@ -14,37 +16,13 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-def create_tables():
-    print("Processing tables..")
-    times = db.Table(
-        "times",
-        metadata,
-        db.Column("id", db.Integer(), primary_key=True),
-        db.Column("name", db.String(50), nullable=False),
-        db.Column("activity_id", db.Integer(), default=None),
-        db.Column("user_id", db.Integer()),
-    )
-    activities = db.Table(
-        "activities",
-        metadata,
-        db.Column("id", db.Integer(), primary_key=True),
-        db.Column("name", db.String(50), nullable=False),
-        db.Column("user_id", db.Integer(), nullable=False),
-        db.Column("color", db.String(50), nullable=False, default="green"),
-    )
-    users = db.Table(
-        "users",
-        metadata,
-        db.Column("id", db.Integer(), primary_key=True),
-        db.Column("name", db.String(50), nullable=False),
-        db.Column("username", db.String(50), nullable=False, unique=True),
-        db.Column("password", db.Binary(), nullable=False),
-        db.Column("salt", db.Binary(), nullable=False),
-        db.Column("is_authenticated", db.Boolean(), nullable=False, default=False),
-    )
-
-    metadata.create_all(engine)
-    print("Created tables")
+def drop_tables():
+    print("Dropping all tables..")
+    User.__table__.drop(engine, checkfirst=True)
+    Activity.__table__.drop(engine, checkfirst=True)
+    Time.__table__.drop(engine, checkfirst=True)
+    session.commit()
+    print("Done dropping")
 
 
 def populate_tables():
@@ -84,10 +62,8 @@ def populate_tables():
     print("Done populating")
 
 
-def seed():
-    create_tables()
-    populate_tables()
-
-
-if __name__ == "__main__":
-    seed()
+def seed(d, p):
+    if d:
+        drop_tables()
+    if p:
+        populate_tables()
