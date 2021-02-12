@@ -21,6 +21,24 @@ def client():
         yield client
 
 
+def test_register(client):
+    """Can register."""
+    rv = client.post(
+        "/api/register",
+        data=json.dumps(
+            {"username": "admins", "password": "admin", "name": "Some name"}
+        ),
+    )
+
+    assert b"id" in rv.data
+    assert b"username" in rv.data
+    assert b"name" in rv.data
+    x = json.loads(rv.data)
+    assert x["username"] == "admins"
+    assert x["name"] == "Some name"
+    assert x["id"] is not None
+
+
 def test_login(client):
     """Can sign in."""
     rv = client.post(
@@ -32,6 +50,14 @@ def test_login(client):
     assert b"id" in rv.data
     x = json.loads(rv.data)
     assert x["id"] is not None
+
+
+def test_api_home(client):
+    """Returns a welcome statement."""
+    rv = client.get("/api")
+
+    x = json.loads(rv.data)
+    assert x["Hello"] == "api"
 
 
 def test_logout(client):

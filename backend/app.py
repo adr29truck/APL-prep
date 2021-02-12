@@ -62,9 +62,9 @@ def not_found(e):
 
 
 # Set up some routes for the example
-@app.route("/api/")
+@app.route("/api")
 def home():
-    return {"Hello"}, 200
+    return {"Hello": "api"}, 200
 
 
 @app.route("/api/login", methods=["POST"])
@@ -109,15 +109,18 @@ def logout():
 
 @app.route("/api/register", methods=["POST"])
 def register():
-    data = dict(flask.request.get_json())
+    data = flask.request.get_json(force=True)
     try:
         password, salt = User.hash_password(data["password"])
         new_user = User(
-            name=data["name"], username=data["username"], password=password, salt=salt
+            name=data["name"],
+            username=data["username"],
+            password=password,
+            salt=salt,
+            is_authenticated=True,
         )
         db.session.add(new_user)
         db.session.commit()
-        db.session.close()
 
         return flask.jsonify(new_user.serialize)
     except:
